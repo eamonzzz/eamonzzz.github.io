@@ -1,0 +1,1491 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="设计模式-单例模式（详解）看看和你理解的是否一样？, Eamon,EamonZzz">
+    <meta name="description" content="付出不亚于任何人的努力">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>设计模式-单例模式（详解）看看和你理解的是否一样？ | EamonBlog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">EamonBlog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">EamonBlog</div>
+        <div class="logo-desc">
+            
+            付出不亚于任何人的努力
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/eamonzzz" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/eamonzzz" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">设计模式-单例模式（详解）看看和你理解的是否一样？</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                <span class="chip bg-color">设计模式</span>
+                            </a>
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                设计模式
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-10-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-04-20
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    18 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>单例模式是设计模式中相对简单且非常常见的一种设计模式，但是同时也是非常经典的<strong>高频</strong>面试题，相信还是有很多人在面试时会挂在这里。本篇文章主要针对单例模式做一个回顾，记录单例模式的应用场景、常见写法、针对线程安全进行调试（看得见的线程）以及总结。相信大家看完这篇文章之后，对单例模式有一个非常深刻的认识。</p>
+<a id="more"></a>
+
+<p>文章中按照常见的单例模式的写法，由浅入深进行讲解记录；以及指出该写法的不足，从而进行演进改造。</p>
+<p>秉承废话少说的原则，我们下面快速开始</p>
+<h1 id="二、定义"><a href="#二、定义" class="headerlink" title="二、定义"></a>二、定义</h1><p>单例模式(Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点。</p>
+<p>单例模式是创建型模式。</p>
+<h1 id="三、应用场景"><a href="#三、应用场景" class="headerlink" title="三、应用场景"></a>三、应用场景</h1><ol>
+<li>生活中的单例：例如，国家主席、公司 CEO、部门经理等。</li>
+<li>在<code>Java</code>世界中：<code>ServletContext</code>、 <code>ServletContextConfig</code> 等;</li>
+<li>在 <code>Spring</code> 框架应用中：<code>ApplicationContext</code>、数据库的连接池也都是单例形式。</li>
+</ol>
+<h1 id="四、常见的单例模式写法"><a href="#四、常见的单例模式写法" class="headerlink" title="四、常见的单例模式写法"></a>四、常见的单例模式写法</h1><blockquote>
+<p>单例模式主要有：饿汉式单例、懒汉式单例（线程不安全型、线程安全型、双重检查锁类型、静态内部类类型）、注册式（登记式）单例（枚举式单例、容器式单例）、<code>ThreadLocal</code>线程单例</p>
+</blockquote>
+<p>下面我们来看看各种模式的写法。</p>
+<h2 id="1、饿汉式单例"><a href="#1、饿汉式单例" class="headerlink" title="1、饿汉式单例"></a>1、饿汉式单例</h2><p>饿汉式单例是在类加载的时候就立即初始化，并且创建单例对象。绝对线程安全，在线程还没出现以前就是实例化了，不可能存在访问安全问题。</p>
+<p>Spring 中 IOC 容器 ApplicationContext 就是典型的饿汉式单例</p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>优点</strong>：没有加任何的锁、执行效率比较高，在用户体验上来说，比懒汉式更好。</p>
+<p><strong>缺点</strong>：类加载的时候就初始化，不管用与不用都占着空间，浪费了内存，有可能占着茅坑不拉屎。</p>
+<h3 id="写法"><a href="#写法" class="headerlink" title="写法"></a>写法</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 上午9:26
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HungrySingleton</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 1.私有化构造器</span>
+    <span class="token keyword">private</span> <span class="token function">HungrySingleton</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">// 2.在类的内部创建自行实例</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> HungrySingleton instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HungrySingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 3.提供获取唯一实例的方法（全局访问点）</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> HungrySingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>还有另外一种写法，利用静态代码块的机制：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 上午10:46
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HungryStaticSingleton</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 1. 私有化构造器</span>
+    <span class="token keyword">private</span> <span class="token function">HungryStaticSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 2. 实例变量</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> HungryStaticSingleton instance<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 3. 在静态代码块中实例化</span>
+    <span class="token keyword">static</span> <span class="token punctuation">{</span>
+        instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HungryStaticSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 4. 提供获取实例方法</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> HungryStaticSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>测试代码,我们创建 10 个线程（具体线程发令枪 ConcurrentExecutor 在文末源码中获取）：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 上午11:17
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HungrySingletonTest</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            ConcurrentExecutor<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                HungrySingleton instance <span class="token operator">=</span> HungrySingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" : "</span> <span class="token operator">+</span> instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>测试结果：</p>
+<pre><code>pool-1-thread-6 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-1 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-9 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-10 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-2 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-7 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-5 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-3 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-4 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+pool-1-thread-8 : com.eamon.javadesignpatterns.singleton.hungry.HungrySingleton@5e37cce6
+...</code></pre><p>可以看到，饿汉式每次获取实例都是同一个。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>这两种写法都非常的简单，也非常好理解，饿汉式适用在单例对象较少的情况。</p>
+<p>下面我们来看性能更优的写法——懒汉式单例。</p>
+<hr>
+<h2 id="2、懒汉式单例"><a href="#2、懒汉式单例" class="headerlink" title="2、懒汉式单例"></a>2、懒汉式单例</h2><p>懒汉式单例的特点是:被外部类调用的时候内部类才会加载。</p>
+<p>懒汉式单例可以分为下面这几种写法来。</p>
+<h3 id="简单懒汉式（线程不安全）"><a href="#简单懒汉式（线程不安全）" class="headerlink" title="简单懒汉式（线程不安全）"></a>简单懒汉式（线程不安全）</h3><p>这是懒汉式单例的简单写法</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 上午10:55
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LazySimpleSingleton</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token function">LazySimpleSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> LazySimpleSingleton instance <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> LazySimpleSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>instance <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LazySimpleSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>我们创建一个多线程来测试一下，是否线程安全：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 上午11:12
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LazySimpleSingletonTest</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            ConcurrentExecutor<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                LazySimpleSingleton instance <span class="token operator">=</span> LazySimpleSingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" : "</span> <span class="token operator">+</span> instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
+<p>运行结果：</p>
+<pre class=" language-java"><code class="language-java">pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">3</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>LazySimpleSingleton<span class="token annotation punctuation">@abe194f</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">5</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>LazySimpleSingleton<span class="token annotation punctuation">@abe194f</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">1</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>LazySimpleSingleton<span class="token annotation punctuation">@748e48d0</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">2</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>LazySimpleSingleton<span class="token annotation punctuation">@abe194f</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">4</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>LazySimpleSingleton<span class="token annotation punctuation">@abe194f</span></code></pre>
+<p>从测试结果来看，一定几率出现创建两个不同结果的情况，意味着上面的单例存在线程安全隐患。</p>
+<p>至于为什么？由于篇幅问题，我们在后面一篇文章中利用测试工具进行详细的分析（这可能也是面试中面试官会问到的问题）。大家现在只需要知道简单的懒汉式会存在这么一个问题就行了。</p>
+<h3 id="简单懒汉式（线程安全）"><a href="#简单懒汉式（线程安全）" class="headerlink" title="简单懒汉式（线程安全）"></a>简单懒汉式（线程安全）</h3><p>通过对上面简单懒汉式单例的测试，我们知道存在线程安全隐患，那么，如何来避免或者解决呢？</p>
+<p>我们都知道 java 中有一个<code>synchronized</code>可以来对共享资源进行加锁，保证在同一时刻只能有一个线程拿到该资源，其他线程只能等待。所以，我们对上面的简单懒汉式进行改造，给<code>getInstance()</code> 方法加上<code>synchronized</code>：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 上午10:55
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LazySimpleSyncSingleton</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token function">LazySimpleSyncSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> LazySimpleSyncSingleton instance <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">static</span> LazySimpleSyncSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>instance <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LazySimpleSyncSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>然后使用发令枪进行测试：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testSync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        ConcurrentExecutor<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            LazySimpleSyncSingleton instance <span class="token operator">=</span> LazySimpleSyncSingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" : "</span> <span class="token operator">+</span> instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>进行多轮测试，并观察结果，发现能够获取同一个示例：</p>
+<pre class=" language-java"><code class="language-java">pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">3</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>simple<span class="token punctuation">.</span>LazySimpleSyncSingleton<span class="token annotation punctuation">@1a7e99de</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">2</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>simple<span class="token punctuation">.</span>LazySimpleSyncSingleton<span class="token annotation punctuation">@1a7e99de</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">5</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>simple<span class="token punctuation">.</span>LazySimpleSyncSingleton<span class="token annotation punctuation">@1a7e99de</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">1</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>simple<span class="token punctuation">.</span>LazySimpleSyncSingleton<span class="token annotation punctuation">@1a7e99de</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">4</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>lazy<span class="token punctuation">.</span>simple<span class="token punctuation">.</span>LazySimpleSyncSingleton<span class="token annotation punctuation">@1a7e99de</span></code></pre>
+<p>线程安全问题是解决了，但是，用<code>synchronized</code>加锁，在线程数量比较多情况下，如果<code>CPU</code>分配压力上升，会导致大批量线程出现阻塞，从而导致程序运行性能大幅下降。</p>
+<p>那么，有没有一种更好的方式，既兼顾线程安全又提升程序性能呢？答案是肯定的。</p>
+<p>我们来看双重检查锁的单例模式。</p>
+<h3 id="双重检查锁懒汉式"><a href="#双重检查锁懒汉式" class="headerlink" title="双重检查锁懒汉式"></a>双重检查锁懒汉式</h3><p>上面的线程安全方式的写法，<code>synchronized</code>锁是锁在 <code>getInstance()</code> 方法上，当多个线程过来拿资源的时候，其实需要拿的不是<code>getInstance()</code>这个方法，而是<code>getInstance()</code>方法里面的<code>instance</code> 实例对象，而如果这个实例对象一旦被初始化之后，多个线程到达时，就可以利用方法中的 <code>if (instance == null)</code> 去判断是否实例化，如果已经实例化了就直接返回，就没有必要再进行实例化一遍。所以对上面的代码进行改造：</p>
+<p>第一次改造：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 下午2:03
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LazyDoubleCheckSingleton</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token function">LazyDoubleCheckSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> LazyDoubleCheckSingleton instance <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> LazyDoubleCheckSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 这里判断是为了过滤不必要的同步加锁，因为如果已经实例化了，就可以直接返回了</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>instance <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 如果未初始化，则对资源进行上锁保护，待实例化完成之后进行释放</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>LazyDoubleCheckSingleton<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LazyDoubleCheckSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这种方法行不行？答案肯定是不行，代码中虽然是将同步锁添加到了实例化操作中，解决了每个线程由于同步锁的原因引起的阻塞，提高了性能；但是，这里会存在一个问题：</p>
+<ul>
+<li><code>线程X</code>和<code>线程Y</code>同时调用<code>getInstance()</code>方法，他们同时判断<code>instance == null</code>，得出的结果都是为<code>null</code>，所以进入了<code>if</code>代码块了</li>
+<li>此时<code>线程X</code>得到<code>CPU</code>的控制权 -&gt; 进入同步代码块 -&gt; 创建对象 -&gt; 返回对象</li>
+<li><code>线程X</code>执行完成了以后，释放了锁，然后<code>线程Y</code>得到了<code>CPU</code>的控制权。同样是 -&gt; 进入同步代码块 -&gt; 创建对象 -&gt; 返回对象</li>
+</ul>
+<p>所以我们明显可以分析出来：<code>LazyDoubleCheckSingleton</code> 类返回了不止一个实例！所以上面的代码是不行的！大家可以自行测试，我这里就不进行测试了！</p>
+<p>我们再进行改造，经过分析，由于<code>线程X</code>已经实例化了对象，在<code>线程Y</code>再次进入的时候，我们再加一层判断不就可以解决 <strong>“这个”</strong> 问题吗？确实如此，来看代码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 下午2:03
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LazyDoubleCheckSingleton</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token function">LazyDoubleCheckSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> LazyDoubleCheckSingleton instance <span class="token operator">=</span> null<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> LazyDoubleCheckSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 这里判断是为了过滤不必要的同步加锁，因为如果已经实例化了，就可以直接返回了</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>instance <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 如果未初始化，则对资源进行上锁保护，待实例化完成之后进行释放（注意，可能多个线程会同时进入）</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>LazyDoubleCheckSingleton<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// 这里的if作用是：如果后面的进程在前面一个线程实例化完成之后拿到锁，进入这个代码块，</span>
+                <span class="token comment" spellcheck="true">// 显然，资源已经被实例化过了，所以需要进行判断过滤</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>instance <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LazyDoubleCheckSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>大家觉得经过这样改造是不是就完美了呢？在我们习惯性的“讲道理”的思维模式看来，好像确实没什么问题，但是，程序是计算机在执行；什么意思呢？</p>
+<p>在 <code>instance = new LazyDoubleCheckSingleton();</code> 这段代码执行的时候，计算机内部并非简单的一步操作，也就是非原子操作，在<code>JVM</code>中，这一行代码大概做了这么几件事情：</p>
+<ol>
+<li>给 <code>instance</code> 分配内存</li>
+<li>调用 <code>LazyDoubleCheckSingleton</code> 的构造函数来初始化成员变量</li>
+<li>将<code>instance</code>对象指向分配的内存空间（执行完这步 <code>instance</code> 就为非 null 了）</li>
+</ol>
+<p>但是在 <code>JVM</code> 中的即时编译器中存在指令重排序的优化；通俗的来说就是，上面的第二步和第三步的顺序是不能保证的，如果执行顺序是 <code>1 -&gt; 3 -&gt; 2</code> 那么在 3 执行完毕、2 未执行之前，被另外一个线程 A 抢占了，这时 <code>instance</code> 已经是非 null 了（但却没有初始化），所以线程 A 会直接返回 <code>instance</code>，然后被程序调用，就会报错。</p>
+<blockquote>
+<p>当然，这种情况是很难测试出来的，但是确实会存在这么一个问题，所以我们必须解决它，解决方式也很简单，就是 j 将 <code>instance</code> 加上 <code>volatile</code> 关键字。</p>
+</blockquote>
+<p>所以相对较完美的实现方式是：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 下午2:03
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LazyDoubleCheckSingleton</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token function">LazyDoubleCheckSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">volatile</span> LazyDoubleCheckSingleton instance <span class="token operator">=</span> null<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> LazyDoubleCheckSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 这里判断是为了过滤不必要的同步加锁，因为如果已经实例化了，就可以直接返回了</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>instance <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 如果未初始化，则对资源进行上锁保护，待实例化完成之后进行释放（注意，可能多个线程会同时进入）</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>LazyDoubleCheckSingleton<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// 这里的if作用是：如果后面的进程在前面一个线程实例化完成之后拿到锁，进入这个代码块，</span>
+                <span class="token comment" spellcheck="true">// 显然，资源已经被实例化过了，所以需要进行判断过滤</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>instance <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LazyDoubleCheckSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>测试代码见文末说明</p>
+<h3 id="静态内部类懒汉式"><a href="#静态内部类懒汉式" class="headerlink" title="静态内部类懒汉式"></a>静态内部类懒汉式</h3><p>上面的双重锁检查形式的单例，对于日常开发来说，确实够用了，但是在代码中使用<code>synchronized</code>关键字 ，总归是要上锁，上锁就会存在一个性能问题。难道就没有更好的方案吗？别说，还真有，我们从类初始化的角度来考虑，这就是这里所要说到的静态内部类的方式。</p>
+<p>废话不多说，直接看代码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ *
+ * @author eamon.zhang
+ * @date 2019-09-30 下午2:55
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LazyInnerClassSingleton</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token function">LazyInnerClassSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 注意关键字final，保证方法不被重写和重载</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> LazyInnerClassSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> LazyHolder<span class="token punctuation">.</span>INSTANCE<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">LazyHolder</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 注意 final 关键字（保证不被修改）</span>
+        <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> LazyInnerClassSingleton INSTANCE <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LazyInnerClassSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>进行多线程测试：</p>
+<pre><code>pool-1-thread-9 : com.eamon.javadesignpatterns.singleton.lazy.inner.LazyInnerClassSingleton@88b7fa2
+pool-1-thread-1 : com.eamon.javadesignpatterns.singleton.lazy.inner.LazyInnerClassSingleton@88b7fa2
+pool-1-thread-6 : com.eamon.javadesignpatterns.singleton.lazy.inner.LazyInnerClassSingleton@88b7fa2
+...</code></pre><p>结果都是同一个对象实例。</p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>这种方式即解决了饿汉式的内存浪费问题，也解决了<code>synchronized</code> 所带来的性能问题</p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>利用的原理就是类的加载初始化顺序：</p>
+<ol>
+<li>当类不被调用的时候，类的静态内部类是不会进行初始化的，这就避免了内存浪费问题；</li>
+<li>当有方法调用 <code>getInstance()</code>方法时，会先初始化静态内部类，而静态内部类中的成员变量是 <code>final</code> 的，所以即便是多线程，其成员变量是不会被修改的，所以就解决了添加 <code>synchronized</code> 所带来的性能问题</li>
+</ol>
+<hr>
+<p>首先感谢也恭喜大家能够看到这里，因为我想告诉你，上面所有的单例模式似乎还存在一点小问题 —— 暴力破坏。解决这一问题的方式就是下面提到的枚举类型单例。</p>
+<p>至于缘由和为何枚举能够解决这个问题，同样，篇幅原因，我将在后面单独开一篇文章来说明。</p>
+<hr>
+<p>下面我们先来讲讲注册式单例。</p>
+<h2 id="3、注册式（登记式）单例"><a href="#3、注册式（登记式）单例" class="headerlink" title="3、注册式（登记式）单例"></a>3、注册式（登记式）单例</h2><p>注册式单例又称为登记式单例，就是将每一个实例都登记到某一个地方，使用唯一的标识获取实例。</p>
+<p>注册式单例有两种写法:一种为容器缓存，一种为枚举登记。</p>
+<p>先来看枚举式单例的写法。</p>
+<h3 id="枚举单例"><a href="#枚举单例" class="headerlink" title="枚举单例"></a>枚举单例</h3><p>废话少说，直接看代码，我们先创建<code>EnumResource</code> 类：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 下午3:53
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnumResource</span> <span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre>
+<p>然后创建<code>EnumSingleton</code>:</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 下午3:42
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">enum</span> EnumSingleton <span class="token punctuation">{</span>
+    INSTANCE<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> Object instance<span class="token punctuation">;</span>
+
+    <span class="token function">EnumSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EnumResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> Object <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
+<p>来看测试代码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author eamon.zhang
+ * @date 2019-09-30 下午3:47
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EnumSingletonTest</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            ConcurrentExecutor<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                EnumSingleton instance <span class="token operator">=</span> EnumSingleton<span class="token punctuation">.</span>INSTANCE<span class="token punctuation">;</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>instance<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span></code></pre>
+<p>测试结果：</p>
+<pre class=" language-java"><code class="language-java">com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>enums<span class="token punctuation">.</span>EnumResource<span class="token annotation punctuation">@3eadb1e7</span></code></pre>
+<p>结果都一样，说明枚举类单例是线程安全的，且是不可破坏的；在 JDK 枚举的语法特殊性，以及反射也为枚举保驾护航，让枚举式单例成为一种比较优雅的实现。</p>
+<p>枚举类单例也是《Effective Java》中所建议使用的。</p>
+<h3 id="容器式单例"><a href="#容器式单例" class="headerlink" title="容器式单例"></a>容器式单例</h3><p>注册式单例还有另外一种写法，利用容器缓存，直接来看代码：</p>
+<p>创建<code>ContainerSingleton</code>类:</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author EamonZzz
+ * @date 2019-10-06 18:28
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ContainerSingleton</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token function">ContainerSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span> ioc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentHashMap</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> Object <span class="token function">getBean</span><span class="token punctuation">(</span>String className<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>ioc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ioc<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>className<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                Object object <span class="token operator">=</span> null<span class="token punctuation">;</span>
+                <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                    object <span class="token operator">=</span> Class<span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span>className<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    ioc<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>className<span class="token punctuation">,</span> object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">return</span> object<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token keyword">return</span> ioc<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>className<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>测试代码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            ConcurrentExecutor<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                Object bean <span class="token operator">=</span> ContainerSingleton
+                        <span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"com.eamon.javadesignpatterns.singleton.container.Resource"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>bean<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>测试结果：</p>
+<pre class=" language-java"><code class="language-java">com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>container<span class="token punctuation">.</span>Resource<span class="token annotation punctuation">@42e7420f</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>container<span class="token punctuation">.</span>Resource<span class="token annotation punctuation">@42e7420f</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>container<span class="token punctuation">.</span>Resource<span class="token annotation punctuation">@42e7420f</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>container<span class="token punctuation">.</span>Resource<span class="token annotation punctuation">@42e7420f</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>container<span class="token punctuation">.</span>Resource<span class="token annotation punctuation">@42e7420f</span></code></pre>
+<p>容器式写法适用于创建实例非常多的情况，便于管理。但是，是非线程安全的。</p>
+<p>其实 Spring 中也有相关容器史丹利的实现代码，比如 <code>AbstractAutowireCapableBeanFactory</code> 接口</p>
+<p>至此，注册式单例介绍完毕。</p>
+<hr>
+<h1 id="五、拓展"><a href="#五、拓展" class="headerlink" title="五、拓展"></a>五、拓展</h1><h2 id="ThreadLocal-线程单例"><a href="#ThreadLocal-线程单例" class="headerlink" title="ThreadLocal 线程单例"></a>ThreadLocal 线程单例</h2><p>ThreadLocal 不能保证其创建的对象是唯一的，但是能保证在单个线程中是唯一的，并且在单个线程中是天生的线程安全。</p>
+<p>看代码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * @author EamonZzz
+ * @date 2019-10-06 21:40
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadLocalSingleton</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token function">ThreadLocalSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> ThreadLocal<span class="token operator">&lt;</span>ThreadLocalSingleton<span class="token operator">></span> instance <span class="token operator">=</span> ThreadLocal<span class="token punctuation">.</span><span class="token function">withInitial</span><span class="token punctuation">(</span>ThreadLocalSingleton<span class="token operator">:</span><span class="token operator">:</span><span class="token keyword">new</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> ThreadLocalSingleton <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> instance<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>测试程序：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"-------------- 单线程 start ---------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ThreadLocalSingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ThreadLocalSingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ThreadLocalSingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ThreadLocalSingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>ThreadLocalSingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"-------------- 单线程 end ---------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"-------------- 多线程 start ---------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        ConcurrentExecutor<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            ThreadLocalSingleton singleton <span class="token operator">=</span> ThreadLocalSingleton<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" : "</span> <span class="token operator">+</span> singleton<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"-------------- 多线程 end ---------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>测试结果：</p>
+<pre class=" language-java"><code class="language-java"><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span> 单线程 start <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@1374fbda</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@1374fbda</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@1374fbda</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@1374fbda</span>
+com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@1374fbda</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span> 单线程 end <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span> 多线程 start <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">5</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@2f540d92</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">1</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@3ef7ab4e</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">2</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@604ffe2a</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">3</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@50f41c9f</span>
+pool<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>thread<span class="token operator">-</span><span class="token number">4</span> <span class="token operator">:</span> com<span class="token punctuation">.</span>eamon<span class="token punctuation">.</span>javadesignpatterns<span class="token punctuation">.</span>singleton<span class="token punctuation">.</span>threadlocal<span class="token punctuation">.</span>ThreadLocalSingleton<span class="token annotation punctuation">@40821a7a</span>
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span> 多线程 end <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span></code></pre>
+<p>从测试结果来看，我们不难发现，在主线程中无论调用多少次，获得到的实例都是同一个；在多线程环境下，每个线程获取到了不同的实例。</p>
+<p>所以，在单线程环境中，ThreadLocal 可以达到单例的目的。这实际上是以空间换时间来实现线程间隔离的。</p>
+<h1 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h1><p>单例模式可以保证内存里只有一个实例，减少了内存的开销；可避免对资源的浪费。</p>
+<p>单例模式看起来非常简单，实现起来也不难，但是在面试中却是一个高频的面试题。希望大家能够彻底理解。</p>
+<hr>
+<p>本篇文章所涉及的源代码：</p>
+<p><a href="https://github.com/eamonzzz/java-advanced/tree/master/01.DesignPatterns/design-patterns/src/main/java/com/eamon/javadesignpatterns/singleton" target="_blank" rel="noopener">github.com/eamonzzz</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href=/about rel="external nofollow noreferrer">Eamon Zhang</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://www.eamonzhang.com/posts/8ece96c4.html">https://www.eamonzhang.com/posts/8ece96c4.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href=/about target="_blank">Eamon Zhang</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                    <span class="chip bg-color">设计模式</span>
+                                </a>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/posts/28d4a20f.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Debug调试小技巧">
+                        
+                        <span class="card-title">Debug调试小技巧</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            一、多线程调试断点Intellij IDEA 的debug断点调试是有一个模式的选择的，就像下面这张图，平时我们都使用的是默认的 ALL（在Eclipse中默认是线程模式） ，这种模式我们只能将一个线程断下来，但其他线程却已经执行过了；而将
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-10-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Intellij-IDEA/" class="post-category">
+                                    Intellij IDEA
+                                </a>
+                            
+                            <a href="/categories/Intellij-IDEA/%E5%B7%A5%E5%85%B7/" class="post-category">
+                                    工具
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Intellij-IDEA/">
+                        <span class="chip bg-color">Intellij IDEA</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%B7%A5%E5%85%B7/">
+                        <span class="chip bg-color">工具</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/ccff2b22.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="设计模式-工厂模式">
+                        
+                        <span class="card-title">设计模式-工厂模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+我们都知道Java中共有 23 种设计模式，其中工厂模式分为三种，即：简单工厂模式（不在 23 种设计模式之列）、工厂方法模式和抽象工厂模式；我们平时说的工厂模式，其实大都指工厂方法模式，这种模式是我们平时编码中用的频率最高的一种，在Sp
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-27
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
+                    </a>
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href=/about target="_blank">Eamon Zhang</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">27.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/eamonzzz" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:329294892@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=329294892" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 329294892" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
