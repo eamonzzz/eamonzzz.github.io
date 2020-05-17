@@ -4,6 +4,62 @@
   
     
     <entry>
+      <title>使用GotHub+jsDelivr 制作免费图床</title>
+      <link href="/posts/66dce0e3.html"/>
+      <url>/posts/66dce0e3.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="获得github的token"><a href="#获得github的token" class="headerlink" title="获得github的token"></a>获得github的token</h1><ol><li><p>点击个人头像</p></li><li><p>选择设置</p></li></ol><p><img src="https://cdn.jsdelivr.net/gh/eamonzzz/my-picture-bed/blog-images/20200517182620.png" alt=""></p><ol start="3"><li><p>进入 <code>Developer settings</code> </p></li><li><p>选择 <code>Personal access tokens</code> ，然后点击 <code>Generate new token</code> </p></li></ol><p><img src="https://cdn.jsdelivr.net/gh/eamonzzz/my-picture-bed/blog-images/20200517174434.png" alt=""></p><ol start="5"><li>生成时，权限设置如下</li></ol><p><img src="https://cdn.jsdelivr.net/gh/eamonzzz/my-picture-bed/blog-images/20200517174524.png" alt="img"></p><ol start="6"><li>生成之后，复制该 <code>token</code> </li></ol><h1 id="下载图片上传工具"><a href="#下载图片上传工具" class="headerlink" title="下载图片上传工具"></a>下载图片上传工具</h1><p>推荐使用 <code>PicGo</code> </p><h1 id="设置github图床"><a href="#设置github图床" class="headerlink" title="设置github图床"></a>设置github图床</h1><p>注意：因为某些原因，上传到 <code>github</code>  的图片是不能直接访问的，所以需要绕一步，这里选择免费的 <code>jsdelivr</code> <code>CDN</code>加速。网址：<a href="https://www.jsdelivr.com/?docs=gh" target="_blank" rel="noopener">jsdelivr.com</a></p><p>为了在上传完成时，<code>picgo</code> 能够自动将访问连接设置成 <code>CDN</code> 加速后的连接，这里需要设置自定义域名，格式为： <code>https://cdn.jsdelivr.net/gh/用户名/图床仓库名</code> ，如图所示</p><p><img src="https://cdn.jsdelivr.net/gh/eamonzzz/my-picture-bed/blog-images/20200517181859.png" alt="img"></p><h1 id="上传测试"><a href="#上传测试" class="headerlink" title="上传测试"></a>上传测试</h1><p><img src="https://cdn.nlark.com/yuque/0/2020/png/239945/1589707209169-81ea0398-33a1-4146-b6e7-03248adb18e6.png#align=left&amp;display=inline&amp;height=1956&amp;margin=%5Bobject%20Object%5D&amp;name=&amp;originHeight=1956&amp;originWidth=2548&amp;size=0&amp;status=done&amp;style=none&amp;width=2548" alt=""></p><p><img src="https://cdn.jsdelivr.net/gh/eamonzzz/my-picture-bed/blog-images/20200517182027.png" alt="img"></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>设计模式-原型模式</title>
+      <link href="/posts/92a38b2.html"/>
+      <url>/posts/92a38b2.html</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>原型模式的核心和目的是拷贝<strong>原型</strong>对象，以系统中已经存在的一个对象为原型，直接基于二进制流进行拷贝，无需再经历耗时的对象初始化过程（不调用构造器），从而提升了性能，特别是当创建的对象比较耗时时，可以使用原型模式对其进行克隆（一般是基于二进制流的复制），来避免初始化过程，大大提高对象的创建速度。</p></blockquote><a id="more"></a><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><strong>原型模式</strong>（Prototype Pattern）属于<strong>创建型</strong>模式，是指通过<strong>现有</strong>的原型实例来指定创建对象的种类，然后通过<strong>这个原型对象</strong>提供的<strong>复制</strong>方法来创建更多<strong>新的对象</strong>。</p><h2 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h2><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 设计模式 </category>
+          
+          <category> 创建型模式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 设计模式 </tag>
+            
+            <tag> Java </tag>
+            
+            <tag> 创建型模式 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>设计模式-委派模式</title>
       <link href="/posts/a77bbab9.html"/>
       <url>/posts/a77bbab9.html</url>

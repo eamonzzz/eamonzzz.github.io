@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="设计模式-导读, Eamon,EamonZzz">
+    <meta name="keywords" content="设计模式-原型模式, Eamon,EamonZzz">
     <meta name="description" content="付出不亚于任何人的努力">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>设计模式-导读 | EamonBlog</title>
+    <title>设计模式-原型模式 | EamonBlog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -308,12 +308,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">设计模式-导读</h1>
+                    <h1 class="description center-align post-title">设计模式-原型模式</h1>
                 </div>
             </div>
         </div>
@@ -438,6 +438,10 @@
                                 <span class="chip bg-color">Java</span>
                             </a>
                         
+                            <a href="/tags/%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+                                <span class="chip bg-color">创建型模式</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -450,6 +454,10 @@
                                 设计模式
                             </a>
                         
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                创建型模式
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -459,28 +467,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-27
+                    2020-04-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-20
+                    2020-05-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    765
+                    248
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
 
@@ -495,151 +503,13 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>其实不用设计模式并非不可以，但是用好设计模式能帮助我们更好地解决实际问题。</p>
-<p>设计模式天天都在用，但自己却无感知。</p>
+                <blockquote>
+<p>原型模式的核心和目的是拷贝<strong>原型</strong>对象，以系统中已经存在的一个对象为原型，直接基于二进制流进行拷贝，无需再经历耗时的对象初始化过程（不调用构造器），从而提升了性能，特别是当创建的对象比较耗时时，可以使用原型模式对其进行克隆（一般是基于二进制流的复制），来避免初始化过程，大大提高对象的创建速度。</p>
+</blockquote>
 <a id="more"></a>
 
-<p>本系列文章，初衷是为了记录日常经常使用的设计模式，也给学习设计模式的同学们提供参考和查阅。</p>
-<p>文章内容有自己的理解，也有参考网络，如有侵犯，请告知删除。</p>
-<h1 id="学习设计模式的重要性"><a href="#学习设计模式的重要性" class="headerlink" title="学习设计模式的重要性"></a>学习设计模式的重要性</h1><p>设计模式最重要的是解耦。</p>
-<p>学习设计模式是如何总结经验的，把经验为自己所用。</p>
-<p>学设计模式也是锻炼将业务需求转换技术实现的一种非常有效的方式。</p>
-<h1 id="设计模式的基石"><a href="#设计模式的基石" class="headerlink" title="设计模式的基石"></a>设计模式的基石</h1><p>我们在学习设计模式之前，建议大家，一定要掌握好设计模式的几大原则，《设计模式之禅》一书中开篇就是讲的是设计原则；</p>
-<p>所以在本篇文章中，在这里先对设计原则做一个回顾和总结。</p>
-<table>
-<thead>
-<tr>
-<th>设计原则</th>
-<th>解释</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>开闭原则</td>
-<td>对扩展开放，对修改关闭。</td>
-</tr>
-<tr>
-<td>依赖倒置原则</td>
-<td>通过抽象使各个类或者模块不相互影响，实现松耦合。</td>
-</tr>
-<tr>
-<td>单一职责原则</td>
-<td>一个类、接口、方法只做一件事。</td>
-</tr>
-<tr>
-<td>接口隔离原则</td>
-<td>尽量保证接口的纯洁性，客户端不应该依赖不需要的接口。</td>
-</tr>
-<tr>
-<td>迪米特法则</td>
-<td>又叫最少知道原则，一个类对其所依赖的类知道得越少越好。</td>
-</tr>
-<tr>
-<td>里氏替换原则</td>
-<td>子类可以扩展父类的功能但不能改变父类原有的功能。</td>
-</tr>
-<tr>
-<td>合成复用原则</td>
-<td>尽量使用对象组合、聚合，而不使用继承关系达到代码复用的目的。</td>
-</tr>
-</tbody></table>
-<h1 id="经典框架都在用设计模式解决问题"><a href="#经典框架都在用设计模式解决问题" class="headerlink" title="经典框架都在用设计模式解决问题"></a>经典框架都在用设计模式解决问题</h1><p>Spring 就是一个把设计模式用得淋漓尽致的经典框架，其实从类的命名就能看出来，我<br>来一一列举：</p>
-<table>
-<thead>
-<tr>
-<th>设计模式名称</th>
-<th>举例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>工厂模式</td>
-<td>BeanFactory</td>
-</tr>
-<tr>
-<td>装饰器模式</td>
-<td>BeanWrapper</td>
-</tr>
-<tr>
-<td>代理模式</td>
-<td>AopProxy</td>
-</tr>
-<tr>
-<td>委派模式</td>
-<td>DispatcherServlet</td>
-</tr>
-<tr>
-<td>策略模式</td>
-<td>HandlerMapping</td>
-</tr>
-<tr>
-<td>适配器模式</td>
-<td>HandlerAdapter</td>
-</tr>
-<tr>
-<td>模板模式</td>
-<td>JdbcTemplate</td>
-</tr>
-<tr>
-<td>观察者模式</td>
-<td>ContextLoaderListener</td>
-</tr>
-</tbody></table>
-<h1 id="设计模式分类"><a href="#设计模式分类" class="headerlink" title="设计模式分类"></a>设计模式分类</h1><table style="border-collapse: collapse;border:1px solid #f6f6f6;">
-    <thead>
-        <tr>
-            <th>类型</th>
-            <th>名称</th>
-            <th>英文</th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td rowspan="3">创建型模式</td>
-        <td>工厂模式</td>
-        <td>Factory Patterns</td>
-    </tr>
-    <tr>
-        <td>单例模式</td>
-        <td>Singleton Pattern</td>
-    </tr>
-    <tr>
-        <td>原型模式</td>
-        <td>Prototype Pattern</td>
-    </tr>
-    <tr>
-        <td rowspan="3">结构型模式</td>
-        <td>适配器模式</td>
-        <td>Prototype Pattern</td>
-    </tr>
-    <tr>
-        <td>装饰器模式</td>
-        <td>Decorator Pattern</td>
-    </tr>
-    <tr>
-        <td>代理模式</td>
-        <td>Proxy Pattern</td>
-    </tr>
-    <tr>
-        <td rowspan="4">行为型模式</td>
-        <td>策略模式</td>
-        <td>Strategy Pattern</td>
-    </tr>
-    <tr>
-        <td>模板模式</td>
-        <td>Template Pattern</td>
-    </tr>
-    <tr>
-        <td>委派模式</td>
-        <td>Delegate Pattern</td>
-    </tr>
-    <tr>
-        <td>观察者模式</td>
-        <td>Observer Pattern</td>
-    </tr>
-    </tbody>
-</table>
-
-<h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><p>需要特别声明的是，设计模式从来都不是单个设计模式独立使用的。在实际应用中，通常是多个设计模式混合使用，你中有我，我中有你。</p>
-<script>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><strong>原型模式</strong>（Prototype Pattern）属于<strong>创建型</strong>模式，是指通过<strong>现有</strong>的原型实例来指定创建对象的种类，然后通过<strong>这个原型对象</strong>提供的<strong>复制</strong>方法来创建更多<strong>新的对象</strong>。</p>
+<h2 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h2><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -672,7 +542,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href=/about rel="external nofollow noreferrer">Eamon Zhang</a>
+                    <a href=/about rel="external nofollow noreferrer">EamonZhang</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -682,7 +552,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.eamonzhang.com/posts/cef09865.html">https://www.eamonzhang.com/posts/cef09865.html</a>
+                    <a href="https://www.eamonzhang.com/posts/92a38b2.html">https://www.eamonzhang.com/posts/92a38b2.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -695,7 +565,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href=/about target="_blank">Eamon Zhang</a>
+                    <a href=/about target="_blank">EamonZhang</a>
                     !
                 </span>
             </div>
@@ -726,6 +596,10 @@
                             
                                 <a href="/tags/Java/">
                                     <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+                                    <span class="chip bg-color">创建型模式</span>
                                 </a>
                             
                         </div>
@@ -771,32 +645,46 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/8c561be1.html">
+                <a href="/posts/66dce0e3.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="设计模式-七大设计原则（一）">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="使用GotHub+jsDelivr 制作免费图床">
                         
-                        <span class="card-title">设计模式-七大设计原则（一）</span>
+                        <span class="card-title">使用GotHub+jsDelivr 制作免费图床</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            概述
-简单介绍一下七大设计原则：开闭原则：是所有面向对象设计的核心，对扩展开放，对修改关闭依赖倒置原则：针对接口编程，依赖于抽象而不依赖于具体单一职责原则：一个接口只负责一件事情，只能有一个原因导致类变化接口隔离原则：使用多个专门的接口，而
+                            获得github的token
+点击个人头像
+
+选择设置
+
+
+
+
+进入 Developer settings 
+
+选择 Personal access tokens ，然后点击 Generate new token 
+
+
+
+
+生成时，权限设置
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-10-27
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-17
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/%E5%B7%A5%E5%85%B7/" class="post-category">
+                                    工具
                                 </a>
                             
                             
@@ -806,12 +694,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-                        <span class="chip bg-color">设计模式</span>
-                    </a>
-                    
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/%E5%B7%A5%E5%85%B7/">
+                        <span class="chip bg-color">工具</span>
                     </a>
                     
                 </div>
@@ -822,32 +706,30 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/cef09865.html">
+                <a href="/posts/a77bbab9.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="设计模式-导读">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="设计模式-委派模式">
                         
-                        <span class="card-title">设计模式-导读</span>
+                        <span class="card-title">设计模式-委派模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            其实不用设计模式并非不可以，但是用好设计模式能帮助我们更好地解决实际问题。
-设计模式天天都在用，但自己却无感知。
+                            首先委派模式不属于23种设计模式。
+所谓委派，个人理解是：将为达到最终结果的事情交给其他人或中间人来干，我只要最终结果，其他的事情，由我委派的人来安排。
 
-
-本系列文章，初衷是为了记录日常经常使用的设计模式，也给学习设计模式的同学们提供参考和查阅。
-文章内容有自己的理解，也有参考
+更直白的表达就是，比如，我们想要盖一栋楼房，盖完之后我要刷漆，这些事情我自己肯定不能
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-28
                             </span>
                         <span class="publish-author">
                             
@@ -861,7 +743,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
